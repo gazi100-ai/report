@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Deposit Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>ডেইলি ডিপোজিট রিপোর্ট</h1>
+        <form method="POST">
+            <label>MSD:</label><input type="number" name="msd" step="0.01" required><br>
+            <label>ITD:</label><input type="number" name="itd" step="0.01" required><br>
+            <label>MTDR:</label><input type="number" name="mtdr" step="0.01" required><br>
+            <button type="submit">হিসাব করুন</button>
+        </form>
+
+        {% if report %}
+        <div class="report-box" id="reportBox">
+            <p><strong>{{ report.date }}</strong></p>
+            <p>{{ report.branch }}</p>
+            <p>Today Balance/- {{ report.today_balance }}</p>
+            <p>Yesterday Balance/- {{ report.yesterday_balance }}</p>
+            <p>{{ report.change_type }}/- {{ report.change_amount }}</p>
+        </div>
+        <button onclick="copyReport()">কপি করুন</button>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyReport() {
+            const text = document.getElementById("reportBox").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("রিপোর্ট কপি হয়েছে!");
+            });
+        }
+    </script>
+</body>
+</html>
